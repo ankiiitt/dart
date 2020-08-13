@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+
+main() {
+  runApp(MyTech_App());
+}
+web(osname, image) async {
+  var url = "http://192.168.43.171/cgi-bin/web.py?x=${ osname }&y=${ image }";
+  var repsonse = await http.get(url);
+  print(repsonse.body);
+}
+class MyTech_App extends StatelessWidget {
+  @override
+  String osname; 
+  String image;
+Widget build(BuildContext context) {
+  return MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: Text("Docker")
+      ),
+      body: Center(
+        child: Container(
+   width: 300,
+   height: 300,
+  alignment: Alignment.center,
+  color: Colors.amberAccent,
+        child: Column(
+           children: <Widget>[
+             TextField(
+               autocorrect: false,
+               onChanged: (value) {
+                 osname= value;
+                 
+               },
+               decoration: InputDecoration(
+                 border: OutlineInputBorder(),
+                 prefixIcon: Icon(Icons.android),
+                 hintText: "OSNAME",
+             ),),
+             TextField(
+               autocorrect: false,
+               onChanged: (value) {
+                 image = value;
+               },
+               decoration: InputDecoration(
+                 border: OutlineInputBorder(),
+                 prefixIcon: Icon(Icons.android),
+                 hintText: "IMAGE",
+             ),),
+             FlatButton(onPressed: () {
+               web(osname, image);
+             }
+             , child: Text("click"))
+           ],
+         ),
+    ),
+  ),  
+  ),
+  );
+
+}
+}
